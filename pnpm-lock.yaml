@@ -17,6 +17,9 @@ importers:
       '@slidev/theme-seriph':
         specifier: latest
         version: 0.25.0
+      slidev-theme-neversink:
+        specifier: ^0.4.0
+        version: 0.4.0(@nuxt/kit@3.19.3)(@vue/compiler-sfc@3.5.22)(markdown-it-async@2.2.0)(markdown-it@14.1.0)(postcss@8.5.6)(typescript@5.9.3)(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.3))
       vue:
         specifier: ^3.5.22
         version: 3.5.22(typescript@5.9.3)
@@ -348,17 +351,37 @@ packages:
   '@iconify-json/carbon@1.2.14':
     resolution: {integrity: sha512-33u6uGiYJ79Dfp72peT+PBMcjxzi+NyJLpqYRX8pnw0zchsUW7Us2xecgvkWgD83KYcbe6hufyWlHFU9y7fb/Q==}
 
+  '@iconify-json/logos@1.2.9':
+    resolution: {integrity: sha512-G6VCdFnwZcrT6Eveq3m43oJfLw/CX8plwFcE+2jgv3fiGB64pTmnU7Yd1MNZ/eA+/Re2iEDhuCfSNOWTHwwK8w==}
+
+  '@iconify-json/mdi@1.2.3':
+    resolution: {integrity: sha512-O3cLwbDOK7NNDf2ihaQOH5F9JglnulNDFV7WprU2dSoZu3h3cWH//h74uQAB87brHmvFVxIOkuBX2sZSzYhScg==}
+
   '@iconify-json/ph@1.2.2':
     resolution: {integrity: sha512-PgkEZNtqa8hBGjHXQa4pMwZa93hmfu8FUSjs/nv4oUU6yLsgv+gh9nu28Kqi8Fz9CCVu4hj1MZs9/60J57IzFw==}
 
   '@iconify-json/svg-spinners@1.2.4':
     resolution: {integrity: sha512-ayn0pogFPwJA1WFZpDnoq9/hjDxN+keeCMyThaX4d3gSJ3y0mdKUxIA/b1YXWGtY9wVtZmxwcvOIeEieG4+JNg==}
 
+  '@iconify-json/twemoji@1.2.4':
+    resolution: {integrity: sha512-REYJeXhzaLktNe32DxJJf3t65sYC5KO9K0Jh+RApXRBAo1/IB+jBqd8rny2sXci+wtQLBEfD4z4AGCLBrTMGWA==}
+
+  '@iconify-json/uim@1.2.3':
+    resolution: {integrity: sha512-rCOU5nrRbcg5s5ZhL9Esoj/acyPeb6hPetVQYMJ18/wJwYsQtcwrFJXy6XOwyFs9TTLnjFGynLJO/TYihOQtDg==}
+
+  '@iconify/json@2.2.397':
+    resolution: {integrity: sha512-osoLxaGe85Vxec/fGOlx3NwKzdN3JWH8fNITn4o4P+i2UBYGMJTDGSjgl6CIM0OX50IAAFz5jYQebtxInsRnSQ==}
+
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
 
   '@iconify/utils@3.0.2':
     resolution: {integrity: sha512-EfJS0rLfVuRuJRn4psJHtK2A9TqVnkxPpHY6lYHiB9+8eSuudsxbwMiavocG45ujOo6FJ+CIRlRnlOGinzkaGQ==}
+
+  '@iconify/vue@4.3.0':
+    resolution: {integrity: sha512-Xq0h6zMrHBbrW8jXJ9fISi+x8oDQllg5hTDkDuxnWiskJ63rpJu9CvJshj8VniHVTbsxCg9fVoPAaNp3RQI5OQ==}
+    peerDependencies:
+      vue: '>=3'
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -396,6 +419,15 @@ packages:
   '@mdit-vue/types@3.0.2':
     resolution: {integrity: sha512-00aAZ0F0NLik6I6Yba2emGbHLxv+QYrPH00qQ5dFKXlAo1Ll2RHDXwY7nN2WAfrx2pP+WrvSRFTGFCNGdzBDHw==}
     engines: {node: '>=20.0.0'}
+
+  '@mdit/plugin-sub@0.12.0':
+    resolution: {integrity: sha512-27kKkSVkymc+2RNc5XOYkeXip5PgHZPUnHpxUvkpnairLwyHsXb8/gzr9zd5arVkip86rcdy9LIvnF7zO0dNVQ==}
+    engines: {node: '>= 18'}
+    peerDependencies:
+      markdown-it: ^14.1.0
+    peerDependenciesMeta:
+      markdown-it:
+        optional: true
 
   '@mermaid-js/parser@0.6.3':
     resolution: {integrity: sha512-lnjOhe7zyHjc+If7yT4zoedx2vo4sHaTmtkl1+or8BRTnCtDmcTpAjpzDSfCZrshM5bCoz0GyidzadJAH1xobA==}
@@ -1814,6 +1846,9 @@ packages:
   markdown-it-footnote@4.0.0:
     resolution: {integrity: sha512-WYJ7urf+khJYl3DqofQpYfEYkZKbmXmwxQV8c8mO/hGIhgZ1wOe7R4HLFNwqx7TjILbnC98fuyeSsin19JdFcQ==}
 
+  markdown-it-mark@4.0.0:
+    resolution: {integrity: sha512-YLhzaOsU9THO/cal0lUjfMjrqSMPjjyjChYM7oyj4DnyaXEzA8gnW6cVJeyCrCVeyesrY2PlEdUYJSPFYL4Nkg==}
+
   markdown-it-mdc@0.2.6:
     resolution: {integrity: sha512-HxbEZoEmftdm/krWzwI3JcCWoeXTkAufme1gQt8MTN6nY7y2w/I0LI8U9TEERNPjBNtMOLaNaQsM1H+5K15UJQ==}
     peerDependencies:
@@ -2133,6 +2168,11 @@ packages:
     resolution: {integrity: sha512-uxFIHU0YlHYhDQtV4R9J6a52SLx28BCjT+4ieh7IGbgwVJWO+km431c4yRlREUAsAmt/uMjQUyQHNEPf0M39CA==}
     engines: {node: '>=6'}
 
+  qrcode.vue@3.6.0:
+    resolution: {integrity: sha512-vQcl2fyHYHMjDO1GguCldJxepq2izQjBkDEEu9NENgfVKP6mv/e2SU62WbqYHGwTgWXLhxZ1NCD1dAZKHQq1fg==}
+    peerDependencies:
+      vue: ^3.0.0
+
   quansync@0.2.11:
     resolution: {integrity: sha512-AifT7QEbW9Nri4tAwR5M/uzpBuqfZf+zwaEM/QkzEjj7NBuFD2rBuy0K3dE+8wltbezDV7JMA0WfnCPYRSYbXA==}
 
@@ -2266,6 +2306,10 @@ packages:
 
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
+
+  slidev-theme-neversink@0.4.0:
+    resolution: {integrity: sha512-j7QRMf0BcuiZlN7G6blAtDcoWgB7Wu5G92OAciu2aRxYrXCkYwW9ys810fABE4dYcx+tEZT2u0+2QhdJ6C4hvA==}
+    engines: {node: '>=18.0.0', slidev: '>=52.1.0'}
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -2986,6 +3030,14 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
+  '@iconify-json/logos@1.2.9':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/mdi@1.2.3':
+    dependencies:
+      '@iconify/types': 2.0.0
+
   '@iconify-json/ph@1.2.2':
     dependencies:
       '@iconify/types': 2.0.0
@@ -2993,6 +3045,19 @@ snapshots:
   '@iconify-json/svg-spinners@1.2.4':
     dependencies:
       '@iconify/types': 2.0.0
+
+  '@iconify-json/twemoji@1.2.4':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/uim@1.2.3':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify/json@2.2.397':
+    dependencies:
+      '@iconify/types': 2.0.0
+      pathe: 2.0.3
 
   '@iconify/types@2.0.0': {}
 
@@ -3008,6 +3073,11 @@ snapshots:
       mlly: 1.8.0
     transitivePeerDependencies:
       - supports-color
+
+  '@iconify/vue@4.3.0(vue@3.5.22(typescript@5.9.3))':
+    dependencies:
+      '@iconify/types': 2.0.0
+      vue: 3.5.22(typescript@5.9.3)
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
@@ -3050,6 +3120,12 @@ snapshots:
       markdown-it: 14.1.0
 
   '@mdit-vue/types@3.0.2': {}
+
+  '@mdit/plugin-sub@0.12.0(markdown-it@14.1.0)':
+    dependencies:
+      '@types/markdown-it': 14.1.2
+    optionalDependencies:
+      markdown-it: 14.1.0
 
   '@mermaid-js/parser@0.6.3':
     dependencies:
@@ -4809,6 +4885,8 @@ snapshots:
 
   markdown-it-footnote@4.0.0: {}
 
+  markdown-it-mark@4.0.0: {}
+
   markdown-it-mdc@0.2.6(@types/markdown-it@14.1.2)(markdown-it@14.1.0):
     dependencies:
       '@types/markdown-it': 14.1.2
@@ -5289,6 +5367,10 @@ snapshots:
 
   punycode.js@2.3.1: {}
 
+  qrcode.vue@3.6.0(vue@3.5.22(typescript@5.9.3)):
+    dependencies:
+      vue: 3.5.22(typescript@5.9.3)
+
   quansync@0.2.11: {}
 
   queue-microtask@1.2.3: {}
@@ -5436,6 +5518,35 @@ snapshots:
       totalist: 3.0.1
 
   sisteransi@1.0.5: {}
+
+  slidev-theme-neversink@0.4.0(@nuxt/kit@3.19.3)(@vue/compiler-sfc@3.5.22)(markdown-it-async@2.2.0)(markdown-it@14.1.0)(postcss@8.5.6)(typescript@5.9.3)(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.3)):
+    dependencies:
+      '@iconify-json/logos': 1.2.9
+      '@iconify-json/mdi': 1.2.3
+      '@iconify-json/twemoji': 1.2.4
+      '@iconify-json/uim': 1.2.3
+      '@iconify/json': 2.2.397
+      '@iconify/vue': 4.3.0(vue@3.5.22(typescript@5.9.3))
+      '@mdit/plugin-sub': 0.12.0(markdown-it@14.1.0)
+      '@slidev/types': 52.2.5(@nuxt/kit@3.19.3)(@vue/compiler-sfc@3.5.22)(markdown-it-async@2.2.0)(postcss@8.5.6)(typescript@5.9.3)(vite@7.1.10(@types/node@22.18.10)(jiti@2.6.1)(yaml@2.8.1))
+      markdown-it-mark: 4.0.0
+      qrcode.vue: 3.6.0(vue@3.5.22(typescript@5.9.3))
+    transitivePeerDependencies:
+      - '@nuxt/kit'
+      - '@svgr/core'
+      - '@svgx/core'
+      - '@unocss/webpack'
+      - '@vue/compiler-sfc'
+      - markdown-it
+      - markdown-it-async
+      - postcss
+      - supports-color
+      - svelte
+      - typescript
+      - vite
+      - vue
+      - vue-template-compiler
+      - vue-template-es2015-compiler
 
   source-map-js@1.2.1: {}
 
