@@ -1,0 +1,24 @@
+{{ define "login-form-content" }}
+  <div class="form-field-list">
+    <div class="form-field">
+      <label class="label" for="username">Username</label>
+      <input class="input" name="username" type="text" id="username" />
+    </div>
+    <div class="form-field">
+      <label class="label" for="password">Password</label>
+      <input class="input" name="password" type="password" id="password" />
+    </div>
+    <button type="submit" class="btn-cta">Submit</button>
+  </div>
+{{ end }}
+
+{{ define "content" }}
+  <main class="card mt-16">
+    <h1 class="mb-8">Login</h1>
+    <form method="POST">
+      {{ template "login-form-content" . }}
+    </form>
+  </main>
+{{ end }}
+
+{{ template "default-layout.tmpl" . }}

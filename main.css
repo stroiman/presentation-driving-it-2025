@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    --default-font-color: var(--color-slate-800);
+    background-color: var(--color-stone-200);
+    color: var(--color-slate-800);
+    @variant dark {
+      --default-font-color: var(--color-slate-200);
+      background-color: var(--color-stone-800);
+      color: var(--color-slate-200);
+    }
+  }
+  h1 {
+    text-align: center;
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-bold);
+
+    @variant md {
+      font-size: var(--text-4xl);
+    }
+  }
+}
+
+@layer components {
+  .page-normal {
+    p {
+      margin: calc(var(--spacing) * 4) 0;
+    }
+  }
+
+  .btn-cta {
+    color: var(--default-font-color);
+    border-radius: calc(infinity * 1px);
+    background-color: var(--color-orange-300);
+    padding-inline: --spacing(5);
+    padding-block: --spacing(2);
+    font-weight: var(--font-weight-semibold);
+    box-shadow: var(--shadow-md);
+    @variant dark {
+      background-color: var(--color-orange-800);
+      &:hover {
+        background-color: var(--color-orange-700);
+      }
+    }
+    &:hover {
+      background-color: var(--color-orange-400);
+    }
+  }
+
+  .card {
+    --border-color: var(--color-zinc-300);
+    padding: --spacing(4);
+    margin: 0 auto;
+    max-width: --spacing(96);
+    border-radius: --spacing(4);
+    background-color: var(--color-zinc-100);
+    border-color: var(--border-color);
+    border-width: 1px;
+
+    @variant dark {
+      --border-color: var(--color-zinc-700);
+      border-color: var(--color-zinc-700);
+      background-color: var(--color-zinc-900);
+    }
+  }
+
+  .label {
+    margin-top: --spacing(-2);
+  }
+
+  .input {
+    width: 100%;
+    padding: --spacing(2) --spacing(4);
+    border-color: var(--border-color);
+    border-width: 1px;
+    border-radius: --spacing(2);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .form-field-list {
+    display: flex;
+    flex-direction: column;
+    gap: --spacing(6);
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: --spacing(2);
+  }
+
+  .link {
+    color: var(--color-red-800);
+    @variant dark {
+      color: var(--color-red-200);
+    }
+  }
+}
