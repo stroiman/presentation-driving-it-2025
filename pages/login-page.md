@@ -44,7 +44,7 @@ error) {
 func TestLoginPageAuthError(t *testing.T) {
     server := Server{
         Authenticator: StubbedCredentialsResponse{
-            Err: errors.New("Stubbed error)
+            Err: errors.New("Stubbed error")
         },
     }
     // Host is ignored, but necessary for cookies to work
@@ -74,13 +74,23 @@ func TestLoginPageAuthError(t *testing.T) {
 ```
 
 ---
+layout: side-title
+titlewidth: is-3
+align: tl
+---
+
+::title::
+
+# Testing Login
+
+::content::
 
 ````md magic-move {lines: true, maxHeight:'20px'}
 ```go {*}{maxHeight:'10px'}
 func TestLoginPageAuthError(t *testing.T) {
     server := Server{
         Authenticator: StubbedCredentialsResponse{
-            Err: errors.New("Stubbed error)
+            Err: errors.New("Stubbed error")
         },
     }
     // Host is ignored, but necessary for cookies to work
@@ -113,7 +123,7 @@ func TestLoginPageAuthError(t *testing.T) {
 func TestLoginPageAuthError(t *testing.T) {
     server := Server{
         Authenticator: StubbedCredentialsResponse{
-            Err: errors.New("Stubbed error)
+            Err: errors.New("Stubbed error")
         },
     }
     b := browser.New(
@@ -149,7 +159,7 @@ func TestLoginPageAuthError(t *testing.T) {
 func TestLoginPageAuthError(t *testing.T) {
     server := Server{
         Authenticator: StubbedCredentialsResponse{
-            Err: errors.New("Stubbed error)
+            Err: errors.New("Stubbed error")
         },
     }
     b := browser.New(
@@ -168,3 +178,4 @@ func TestLoginPageAuthError(t *testing.T) {
 }
 ```
 ````
+
