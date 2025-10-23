@@ -18,6 +18,8 @@ func TestPrivatePageRedirectsToLogin(t *testing.T) {
 	title := main.Get(shaman.ByH1)
 	assert.Equal(t, "Login", title.TextContent(), "Page title")
 	assert.Equal(t, "/login", win.Location().Pathname(), "Location pathname")
+	_, hasAlert := main.Query(shaman.ByRole(ariarole.Alert))
+	assert.False(t, hasAlert, "Login page has alert on first render")
 }
 
 func TestLoginWithInvalidCredentials(t *testing.T) {
@@ -37,7 +39,7 @@ func TestLoginWithInvalidCredentials(t *testing.T) {
 	}
 
 	{
-		main := shaman.WindowScope(t, win).Subscope(shaman.ByRole(ariarole.Main))
+		main := winScope.Subscope(shaman.ByRole(ariarole.Main))
 		title := main.Get(shaman.ByH1)
 		assert.Equal(t, "Login", title.TextContent())
 		assert.Equal(t, "/login", win.Location().Pathname())

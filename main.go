@@ -42,6 +42,7 @@ func NewRootHandler(authenticator Authenticator) *RootHttpHandler {
 	handler.HandleFunc("GET /{$}", handler.GetIndex)
 	handler.HandleFunc("GET /private", handler.GetPrivate)
 	handler.HandleFunc("GET /login", handler.GetLogin)
+	handler.HandleFunc("POST /login", handler.PostLogin)
 	return &handler
 }
 
@@ -54,7 +55,13 @@ func (h *RootHttpHandler) GetPrivate(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *RootHttpHandler) GetLogin(w http.ResponseWriter, r *http.Request) {
-	renderTemplate("login.tmpl", w, nil)
+	renderTemplate("login.tmpl", w, LoginFormData{})
+}
+
+func (h *RootHttpHandler) PostLogin(w http.ResponseWriter, r *http.Request) {
+	renderTemplate("login.tmpl", w, LoginFormData{
+		ErrMsg: "Invalid credentials",
+	})
 }
 
 func renderTemplate(name string, w http.ResponseWriter, data any) {
@@ -95,6 +102,10 @@ func (a RealAuthenticator) Authenticate(username string, password string) (User,
 
 type User struct {
 	DisplayName string
+}
+
+type LoginFormData struct {
+	ErrMsg string
 }
 
 func getFormValue(r *http.Request, key string) string {

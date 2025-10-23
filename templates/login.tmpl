@@ -9,6 +9,9 @@
       <input class="input" name="password" type="password" id="password" />
     </div>
     <button type="submit" class="btn-cta">Submit</button>
+    {{ if (ne .ErrMsg "") }}
+      <div class="alert" role="alert">{{ .ErrMsg }}</div>
+    {{ end }}
   </div>
 {{ end }}
 
