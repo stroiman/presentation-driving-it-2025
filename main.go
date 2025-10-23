@@ -59,7 +59,7 @@ func (h *RootHttpHandler) GetLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *RootHttpHandler) PostLogin(w http.ResponseWriter, r *http.Request) {
-	renderTemplate("login.tmpl", w, LoginFormData{
+	renderNamedTemplate("login.tmpl", "login-form-content", w, LoginFormData{
 		ErrMsg: "Invalid credentials",
 	})
 }

@@ -18,7 +18,7 @@
 {{ define "content" }}
   <main class="card mt-16">
     <h1 class="mb-8">Login</h1>
-    <form method="POST">
+    <form hx-post="/login">
       {{ template "login-form-content" . }}
     </form>
   </main>
