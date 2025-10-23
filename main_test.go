@@ -47,3 +47,30 @@ func TestLoginWithInvalidCredentials(t *testing.T) {
 		assert.Contains(t, alert.TextContent(), "Invalid credentials")
 	}
 }
+
+func TestLoginWithValidCredentials(t *testing.T) {
+	b := browser.New(browser.WithHandler(NewRootHandler(&StubAuthenticator{
+		User: User{
+			DisplayName: "Smithy",
+		},
+	})))
+	win, err := b.Open("http://example.com/login")
+	winScope := shaman.WindowScope(t, win)
+	assert.NoError(t, err)
+	{
+		form := winScope.
+			Subscope(shaman.ByRole(ariarole.Main)).
+			Subscope(shaman.ByRole(ariarole.Form))
+		form.Textbox(shaman.ByName("Username")).Write("username")
+		form.PasswordText(shaman.ByName("Password")).Write("1234")
+		form.Get(shaman.ByRole(ariarole.Button)).Click()
+	}
+
+	if !t.Run("Returns to index page", func(t *testing.T) {
+		title := shaman.WindowScope(t, win).Get(shaman.ByH1).TextContent()
+		assert.Contains(t, title, "Welcome")
+		assert.Equal(t, "/", win.Location().Pathname())
+	}) {
+		return
+	}
+}
