@@ -23,20 +23,28 @@ func main() {
 }
 
 func renderTemplate(name string, w http.ResponseWriter, data any) {
+	renderNamedTemplate(name, name, w, data)
+}
+
+func renderNamedTemplate(fileName, templateName string, w http.ResponseWriter, data any) {
+	defer func() {
+		if err := recover(); err != nil {
+			slog.Error("Error parsing template", "err", err)
+			renderErrPage(w)
+		}
+	}()
 	w.Header().Set("Content-Type", "text/html")
-	t, err := template.ParseFiles(
-		"layouts/default-layout.tmpl",
-		fmt.Sprintf("templates/%s", name),
-	)
-	if err != nil {
-		w.WriteHeader(500)
-		slog.Error("Error parsing template", "err", err)
-		return
-	}
-	err = t.ExecuteTemplate(w, name, data)
-	if err != nil {
-		w.WriteHeader(500)
+	t := template.Must(template.ParseGlob("layouts/*.tmpl"))
+	t = template.Must(t.ParseFiles(
+		fmt.Sprintf("templates/%s", fileName),
+	))
+	if err := t.ExecuteTemplate(w, templateName, data); err != nil {
 		slog.Error("Error executing template", "err", err)
-		return
+		renderErrPage(w)
 	}
+}
+
+func renderErrPage(w http.ResponseWriter) {
+	w.WriteHeader(500)
+	fmt.Fprint(w, `<!doctype html><head><html></head><body><h1>Oh, dear!</h1></body></html>`)
 }
