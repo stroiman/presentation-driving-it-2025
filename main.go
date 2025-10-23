@@ -63,7 +63,9 @@ func (h *RootHttpHandler) PostLogin(w http.ResponseWriter, r *http.Request) {
 		getFormValue(r, "username"),
 		getFormValue(r, "password"))
 	if err == nil {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		w.Header().Add("HX-Replace-Url", "/")
+		w.Header().Add("HX-Retarget", "body")
+		renderTemplate("index.tmpl", w, nil)
 	} else {
 		renderNamedTemplate("login.tmpl", "login-form-content", w, LoginFormData{
 			ErrMsg: "Invalid credentials",
