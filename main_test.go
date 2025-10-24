@@ -19,3 +19,29 @@ func TestPrivatePageRedirectsToLogin(t *testing.T) {
 	assert.Equal(t, "Login", title.TextContent(), "Page title")
 	assert.Equal(t, "/login", win.Location().Pathname(), "Location pathname")
 }
+
+func TestLoginWithInvalidCredentials(t *testing.T) {
+	b := browser.New(browser.WithHandler(NewRootHandler(&StubAuthenticator{
+		Error: ErrInvalidCredentials,
+	})))
+	win, err := b.Open("http://example.com/login")
+	winScope := shaman.WindowScope(t, win)
+	assert.NoError(t, err)
+	{
+		form := winScope.
+			Subscope(shaman.ByRole(ariarole.Main)).
+			Subscope(shaman.ByRole(ariarole.Form))
+		form.Textbox(shaman.ByName("Username")).Write("username")
+		form.PasswordText(shaman.ByName("Password")).Write("1234")
+		form.Get(shaman.ByRole(ariarole.Button)).Click()
+	}
+
+	{
+		main := shaman.WindowScope(t, win).Subscope(shaman.ByRole(ariarole.Main))
+		title := main.Get(shaman.ByH1)
+		assert.Equal(t, "Login", title.TextContent())
+		assert.Equal(t, "/login", win.Location().Pathname())
+		alert := main.Get(shaman.ByRole(ariarole.Alert))
+		assert.Contains(t, alert.TextContent(), "Invalid credentials")
+	}
+}
