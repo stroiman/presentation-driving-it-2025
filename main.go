@@ -50,7 +50,7 @@ func (h *RootHttpHandler) GetIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *RootHttpHandler) GetPrivate(w http.ResponseWriter, r *http.Request) {
-	renderTemplate("private.tmpl", w, nil)
+	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
 
 func (h *RootHttpHandler) GetLogin(w http.ResponseWriter, r *http.Request) {
