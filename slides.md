@@ -65,6 +65,8 @@ I want a fast feedback loop for all of my code.<br />
 
 ::content::
 
+
+
 ---
 
 # Test-Driven Development
@@ -274,18 +276,30 @@ func TestIndexPage(t *testing.T) {
 ```
 
 ---
+layout: top-title
+color: slate
+---
 
-## Example: A session-based login page
+:: title ::
 
-Drive the implementation of _behaviour_ in the UI. 
+# Example: A session-based login page
 
-- Security concerns
-  - CSRF protection.
-  - Encrypt session cookies
+:: content ::
+
+Use tests to drive the implementation of _behaviour_ in the _UI Layer_
+
+- Login session handling
+- Redirecting to login when requesting protected resources
+- Return to requested resource on successful login
 
 ## Strategy
 
-Mock the code validating credentials.
+Mock the code validating credentials; Not UI responsibility.
+
+<AdmonitionType type="warning" title="Beware">
+This is not a guide to implementing session-based authentication. Many security
+concerns are not covered here.
+</AdmonitionType>
 
 ---
 
@@ -311,13 +325,18 @@ Priorities have been supporting basic HTMX applications.
 
 :: content ::
 
-- Implements most of the relevant parts of the DOM and HTML DOM.
+- Implements most relevant parts of the core browser APIs
+  - DOM/HTML DOM
+  - XMLHttpRequest
+  - url
+  - UI Events
 - Executes JavaScript using V8
   - JavaScript engine is pluggable.
   - Goja support experimental - pure Go JavaScript engine
-- 100% deterministic code execution.
+- 100% deterministic code execution
+  - No erratic tests
 - Time Travel 
-  - E.g., instant feedback when testing throttled behaviour
+  - E.g., for testing throttling and debounce2
 
 ---
 layout: top-title
@@ -349,6 +368,7 @@ layout: top-title
 ---
 
 Donations are also welcome. 
+
 <v-click>VAT invoices can be provided</v-click>
 
 :: title ::
@@ -358,7 +378,11 @@ Donations are also welcome.
 :: content ::
 
 - Features.
+- Feedback
+- Test
+- Spread the word
 - Support for new web APIs
+- Build a web site
 
 ---
 
