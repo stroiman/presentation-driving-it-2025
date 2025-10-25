@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
@@ -32,7 +33,7 @@ type RootHttpHandler struct {
 	Authenticator Authenticator
 }
 
-func NewRootHandler(authenticator Authenticator) *RootHttpHandler {
+func NewRootHandler(authenticator Authenticator) http.Handler {
 	handler := RootHttpHandler{
 		http.NewServeMux(),
 		authenticator,
@@ -45,7 +46,7 @@ func NewRootHandler(authenticator Authenticator) *RootHttpHandler {
 	handler.HandleFunc("GET /private", handler.GetPrivate)
 	handler.HandleFunc("GET /login", handler.GetLogin)
 	handler.HandleFunc("POST /login", handler.PostLogin)
-	return &handler
+	return AuthMiddleWare(&handler)
 }
 
 func (h *RootHttpHandler) GetIndex(w http.ResponseWriter, r *http.Request) {
@@ -53,19 +54,7 @@ func (h *RootHttpHandler) GetIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func loggedIn(r *http.Request) (User, bool) {
-	var user User
-	authCookie, err := r.Cookie("auth")
-	if authCookie == nil {
-		if err != nil {
-			slog.Error("Error reading cookie", "err", err)
-		}
-		return user, false
-	}
-	user, err = decodeCookie(authCookie)
-	ok := err == nil
-	if !ok {
-		slog.Error("Error reading cookie", "err", err)
-	}
+	user, ok := r.Context().Value(authenticatedUser).(User)
 	return user, ok
 }
 
@@ -184,3 +173,28 @@ func decodeCookie(authCookie *http.Cookie) (User, error) {
 	}
 	return user, err
 }
+
+func AuthMiddleWare(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var user User
+		authCookie, err := r.Cookie("auth")
+		if authCookie == nil {
+			if err != nil {
+				slog.Error("Error reading cookie", "err", err)
+			}
+		} else {
+			if user, err = decodeCookie(authCookie); err == nil {
+				r = r.WithContext(
+					context.WithValue(r.Context(), authenticatedUser, user),
+				)
+			} else {
+				slog.Error("Error decoding cookie", "err", err)
+			}
+		}
+		h.ServeHTTP(w, r)
+	})
+}
+
+type contextKey string
+
+const authenticatedUser contextKey = "authUser"
