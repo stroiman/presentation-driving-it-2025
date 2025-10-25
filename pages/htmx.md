@@ -1,3 +1,10 @@
+# Hypermedia
+
+- HTMX
+- Datastar
+
+---
+
 ## HTMX
 
 ```html {*|5}{lines:true}
@@ -71,4 +78,3 @@ Content-Type: text/plain; charset=utf-8
 <p class="text-sm font-light text-gray-500 dark:text-gray-400">Don't have an account yet? <a href="register" hx-boost="true">Click here to register. </a>
 </p>
 ```
-
