@@ -28,12 +28,14 @@ func main() {
 type RootHttpHandler struct {
 	*http.ServeMux
 	Authenticator Authenticator
+	loggedIn      bool
 }
 
 func NewRootHandler(authenticator Authenticator) *RootHttpHandler {
 	handler := RootHttpHandler{
 		http.NewServeMux(),
 		authenticator,
+		false,
 	}
 
 	fs := http.FileServer(http.Dir("./static"))
@@ -51,7 +53,11 @@ func (h *RootHttpHandler) GetIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *RootHttpHandler) GetPrivate(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/login", http.StatusSeeOther)
+	if h.loggedIn {
+		renderTemplate("private.tmpl", w, nil)
+	} else {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
 }
 
 func (h *RootHttpHandler) GetLogin(w http.ResponseWriter, r *http.Request) {
@@ -63,6 +69,7 @@ func (h *RootHttpHandler) PostLogin(w http.ResponseWriter, r *http.Request) {
 		getFormValue(r, "username"),
 		getFormValue(r, "password"))
 	if err == nil {
+		h.loggedIn = true
 		w.Header().Add("HX-Replace-Url", "/")
 		w.Header().Add("HX-Retarget", "body")
 		renderTemplate("index.tmpl", w, nil)
