@@ -30,14 +30,12 @@ func main() {
 type RootHttpHandler struct {
 	*http.ServeMux
 	Authenticator Authenticator
-	loggedIn      bool
 }
 
 func NewRootHandler(authenticator Authenticator) *RootHttpHandler {
 	handler := RootHttpHandler{
 		http.NewServeMux(),
 		authenticator,
-		false,
 	}
 
 	fs := http.FileServer(http.Dir("./static"))
@@ -63,12 +61,7 @@ func loggedIn(r *http.Request) (User, bool) {
 		}
 		return user, false
 	}
-	decoded, err := base64.StdEncoding.DecodeString(authCookie.Value)
-	if err != nil {
-		slog.Error("Error decoding base64 data")
-		return user, false
-	}
-	err = json.Unmarshal(decoded, &user)
+	user, err = decodeCookie(authCookie)
 	ok := err == nil
 	if !ok {
 		slog.Error("Error reading cookie", "err", err)
@@ -90,29 +83,24 @@ func (h *RootHttpHandler) GetLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *RootHttpHandler) PostLogin(w http.ResponseWriter, r *http.Request) {
+	var cookie *http.Cookie
 	user, err := h.Authenticator.Authenticate(
 		getFormValue(r, "username"),
 		getFormValue(r, "password"))
 	if err == nil {
-		h.loggedIn = true
-		cookie, err := json.Marshal(user)
-		if err != nil {
-			renderErrPage(w)
-			return
-		}
-		http.SetCookie(w,
-			&http.Cookie{
-				Name:  "auth",
-				Value: base64.StdEncoding.EncodeToString(cookie),
-			})
-		w.Header().Add("HX-Replace-Url", "/")
-		w.Header().Add("HX-Retarget", "body")
-		renderTemplate("index.tmpl", w, nil)
-	} else {
+		cookie, err = encodeCookie(user)
+	}
+	if err != nil {
+		slog.Error("Error processing login", "err", err)
 		renderNamedTemplate("login.tmpl", "login-form-content", w, LoginFormData{
 			ErrMsg: "Invalid credentials",
 		})
+		return
 	}
+	http.SetCookie(w, cookie)
+	w.Header().Add("HX-Replace-Url", "/")
+	w.Header().Add("HX-Retarget", "body")
+	renderTemplate("index.tmpl", w, nil)
 }
 
 func renderTemplate(name string, w http.ResponseWriter, data any) {
@@ -168,4 +156,31 @@ func getFormValue(r *http.Request, key string) string {
 		return ""
 	}
 	return v[0]
+}
+
+var base64Encoding = base64.StdEncoding
+
+func encodeCookie(user User) (*http.Cookie, error) {
+	cookie, err := json.Marshal(user)
+	if err != nil {
+		return nil, fmt.Errorf("encodeCookig: Error marshalling user: %w", err)
+	}
+	return &http.Cookie{
+		Name:  "auth",
+		Value: base64Encoding.EncodeToString(cookie),
+	}, nil
+}
+
+func decodeCookie(authCookie *http.Cookie) (User, error) {
+	var (
+		decoded []byte
+		user    User
+		err     error
+	)
+	if decoded, err = base64Encoding.DecodeString(authCookie.Value); err != nil {
+		err = fmt.Errorf("decodeCookie: base64 decode: %w", err)
+	} else if err = json.Unmarshal(decoded, &user); err != nil {
+		err = fmt.Errorf("decodeCookie: json unmarshal: %w", err)
+	}
+	return user, err
 }
