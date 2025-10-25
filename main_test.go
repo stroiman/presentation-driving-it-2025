@@ -33,6 +33,19 @@ func TestPrivatePageRedirectsToLogin(t *testing.T) {
 	}) {
 		return
 	}
+
+	t.Run("Return to private page after login", func(t *testing.T) {
+		form := shaman.WindowScope(t, win).
+			Subscope(shaman.ByRole(ariarole.Main)).
+			Subscope(shaman.ByRole(ariarole.Form))
+		form.Textbox(shaman.ByName("Username")).Write("username")
+		form.PasswordText(shaman.ByName("Password")).Write("1234")
+		form.Get(shaman.ByRole(ariarole.Button)).Click()
+
+		title := shaman.WindowScope(t, win).Get(shaman.ByH1)
+		assert.Equal(t, "Private Page", title.TextContent())
+		assert.Equal(t, "/private", win.Location().Pathname())
+	})
 }
 
 func TestLoginWithInvalidCredentials(t *testing.T) {
