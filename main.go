@@ -19,7 +19,7 @@ type Authenticator interface {
 
 func main() {
 	handler := NewRootHandler(RealAuthenticator{})
-	if err := http.ListenAndServe("0.0.0.0:4321", LogMiddleware(handler)); err != nil {
+	if err := http.ListenAndServe("0.0.0.0:4321", LogMiddleware(nil, handler)); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		os.Exit(1)
 	} else {

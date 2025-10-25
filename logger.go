@@ -5,9 +5,12 @@ import (
 	"net/http"
 )
 
-func LogMiddleware(h http.Handler) http.Handler {
+func LogMiddleware(logger *slog.Logger, h http.Handler) http.Handler {
+	if logger == nil {
+		logger = slog.Default()
+	}
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		slog.Info("HTTP Request",
+		logger.Info("HTTP Request",
 			slog.Group("request",
 				"method", r.Method,
 				"url", r.URL),
