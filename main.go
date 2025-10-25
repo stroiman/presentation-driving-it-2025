@@ -99,11 +99,11 @@ func (h *RootHttpHandler) PostLogin(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Add("HX-Replace-Url", redirectUrl)
 	w.Header().Add("HX-Retarget", "body")
-	if redirectUrl == "/private" {
-		renderTemplate("private.tmpl", w, nil)
-	} else {
-		renderTemplate("index.tmpl", w, nil)
-	}
+	newReq := r.WithContext(context.WithValue(r.Context(), authenticatedUser, user))
+	newReq.Method = "GET"
+	newReq.URL.Path = redirectUrl
+	newReq.URL.RawQuery = ""
+	h.ServeHTTP(w, newReq)
 }
 
 func renderTemplate(name string, w http.ResponseWriter, data any) {
@@ -194,7 +194,7 @@ func AuthMiddleWare(h http.Handler) http.Handler {
 		var user User
 		authCookie, err := r.Cookie("auth")
 		if authCookie == nil {
-			if err != nil {
+			if err != nil && !errors.Is(err, http.ErrNoCookie) {
 				slog.Error("Error reading cookie", "err", err)
 			}
 		} else {
