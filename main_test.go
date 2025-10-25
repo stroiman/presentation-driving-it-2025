@@ -12,10 +12,8 @@ import (
 )
 
 func TestPrivatePageRedirectsToLogin(t *testing.T) {
-	logger, pushTB := gosttest.NewTestingLoggerWithPush(t)
-	b := browser.New(browser.WithHandler(LogMiddleware(logger, NewRootHandler(&StubAuthenticator{
-		User: User{DisplayName: "Smithy"},
-	}))))
+	authenticator := &StubAuthenticator{User: User{DisplayName: "Smithy"}}
+	b := initBrowser(t, authenticator)
 
 	win, err := b.Open("http://example.com/private")
 	if !assert.NoError(t, err) {
@@ -23,7 +21,6 @@ func TestPrivatePageRedirectsToLogin(t *testing.T) {
 	}
 
 	if !t.Run("Redirects to login page", func(t *testing.T) {
-		pushTB(t)
 		main := shaman.WindowScope(t, win).Subscope(shaman.ByRole(ariarole.Main))
 		title := main.Get(shaman.ByH1)
 		assert.Equal(t, "Login", title.TextContent(), "Page title")
@@ -35,7 +32,6 @@ func TestPrivatePageRedirectsToLogin(t *testing.T) {
 	}
 
 	t.Run("Return to private page after login", func(t *testing.T) {
-		pushTB(t)
 		form := shaman.WindowScope(t, win).
 			Subscope(shaman.ByRole(ariarole.Main)).
 			Subscope(shaman.ByRole(ariarole.Form))
@@ -107,4 +103,18 @@ func TestLoginWithValidCredentials(t *testing.T) {
 		assert.Equal(t, "Private Page", title.TextContent())
 		assert.Equal(t, "/private", win.Location().Pathname())
 	})
+}
+
+func initBrowser(
+	t testing.TB,
+	authenticator Authenticator,
+) *browser.Browser {
+	logger := gosttest.NewTestingLogger(t)
+	handler := LogMiddleware(logger, NewRootHandler(authenticator))
+	b := browser.New(
+		browser.WithHandler(handler),
+		browser.WithLogger(logger),
+		browser.WithContext(t.Context()),
+	)
+	return b
 }
