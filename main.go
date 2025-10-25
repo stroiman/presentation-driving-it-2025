@@ -54,13 +54,8 @@ func (h *RootHttpHandler) GetIndex(w http.ResponseWriter, r *http.Request) {
 	renderTemplate("index.tmpl", w, nil)
 }
 
-func loggedIn(r *http.Request) (User, bool) {
-	user, ok := r.Context().Value(authenticatedUser).(User)
-	return user, ok
-}
-
 func (h *RootHttpHandler) GetPrivate(w http.ResponseWriter, r *http.Request) {
-	_, ok := loggedIn(r)
+	_, ok := requestGetAuthenticatedUser(r)
 	if ok {
 		renderTemplate("private.tmpl", w, nil)
 	} else {
@@ -99,7 +94,7 @@ func (h *RootHttpHandler) PostLogin(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Add("HX-Replace-Url", redirectUrl)
 	w.Header().Add("HX-Retarget", "body")
-	newReq := r.WithContext(context.WithValue(r.Context(), authenticatedUser, user))
+	newReq := requestSetAuthenticatedUser(r, user)
 	newReq.Method = "GET"
 	newReq.URL.Path = redirectUrl
 	newReq.URL.RawQuery = ""
@@ -199,9 +194,7 @@ func AuthMiddleWare(h http.Handler) http.Handler {
 			}
 		} else {
 			if user, err = decodeCookie(authCookie); err == nil {
-				r = r.WithContext(
-					context.WithValue(r.Context(), authenticatedUser, user),
-				)
+				r = requestSetAuthenticatedUser(r, user)
 			} else {
 				slog.Error("Error decoding cookie", "err", err)
 			}
@@ -213,3 +206,12 @@ func AuthMiddleWare(h http.Handler) http.Handler {
 type contextKey string
 
 const authenticatedUser contextKey = "authUser"
+
+func requestSetAuthenticatedUser(r *http.Request, user User) *http.Request {
+	return r.WithContext(context.WithValue(r.Context(), authenticatedUser, user))
+}
+
+func requestGetAuthenticatedUser(r *http.Request) (User, bool) {
+	user, ok := r.Context().Value(authenticatedUser).(User)
+	return user, ok
+}
