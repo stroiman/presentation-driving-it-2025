@@ -9,6 +9,7 @@ import (
 	"html/template"
 	"log/slog"
 	"net/http"
+	"net/url"
 	"os"
 )
 
@@ -63,12 +64,17 @@ func (h *RootHttpHandler) GetPrivate(w http.ResponseWriter, r *http.Request) {
 	if ok {
 		renderTemplate("private.tmpl", w, nil)
 	} else {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		path := fmt.Sprintf("/login?redirectURL=%s", url.QueryEscape(r.URL.RequestURI()))
+		http.Redirect(w, r, path, http.StatusSeeOther)
 	}
 }
 
 func (h *RootHttpHandler) GetLogin(w http.ResponseWriter, r *http.Request) {
-	renderTemplate("login.tmpl", w, LoginFormData{})
+	redirectURL := r.URL.Query().Get("redirectURL")
+	fmt.Println("Render login", redirectURL)
+	renderTemplate("login.tmpl", w, LoginFormData{
+		RedirectUrl: redirectURL,
+	})
 }
 
 func (h *RootHttpHandler) PostLogin(w http.ResponseWriter, r *http.Request) {
@@ -87,9 +93,17 @@ func (h *RootHttpHandler) PostLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	http.SetCookie(w, cookie)
-	w.Header().Add("HX-Replace-Url", "/")
+	redirectUrl := r.PostForm.Get("redirect-url")
+	if redirectUrl == "" {
+		redirectUrl = "/"
+	}
+	w.Header().Add("HX-Replace-Url", redirectUrl)
 	w.Header().Add("HX-Retarget", "body")
-	renderTemplate("index.tmpl", w, nil)
+	if redirectUrl == "/private" {
+		renderTemplate("private.tmpl", w, nil)
+	} else {
+		renderTemplate("index.tmpl", w, nil)
+	}
 }
 
 func renderTemplate(name string, w http.ResponseWriter, data any) {
@@ -133,7 +147,8 @@ type User struct {
 }
 
 type LoginFormData struct {
-	ErrMsg string
+	RedirectUrl string
+	ErrMsg      string
 }
 
 func getFormValue(r *http.Request, key string) string {

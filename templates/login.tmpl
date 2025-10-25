@@ -1,5 +1,6 @@
 {{ define "login-form-content" }}
   <div class="form-field-list">
+    <input type="hidden" name="redirect-url" value="{{ .RedirectUrl }}" />
     <div class="form-field">
       <label class="label" for="username">Username</label>
       <input class="input" name="username" type="text" id="username" />
