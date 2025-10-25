@@ -1,0 +1,3 @@
+#!/bin/sh
+go mod edit -replace="github.com/gost-dom/browser=$HOME/src/go/gost-dom/browser"
+go mod tidy
