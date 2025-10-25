@@ -5,21 +5,25 @@ import (
 	"testing"
 
 	"github.com/gost-dom/browser"
+	"github.com/gost-dom/browser/testing/gosttest"
 	"github.com/gost-dom/shaman"
 	"github.com/gost-dom/shaman/ariarole"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestPrivatePageRedirectsToLogin(t *testing.T) {
-	b := browser.New(browser.WithHandler(NewRootHandler(&StubAuthenticator{
+	logger, pushTB := gosttest.NewTestingLoggerWithPush(t)
+	b := browser.New(browser.WithHandler(LogMiddleware(logger, NewRootHandler(&StubAuthenticator{
 		User: User{DisplayName: "Smithy"},
-	})))
+	}))))
+
 	win, err := b.Open("http://example.com/private")
 	if !assert.NoError(t, err) {
 		return
 	}
 
 	if !t.Run("Redirects to login page", func(t *testing.T) {
+		pushTB(t)
 		main := shaman.WindowScope(t, win).Subscope(shaman.ByRole(ariarole.Main))
 		title := main.Get(shaman.ByH1)
 		assert.Equal(t, "Login", title.TextContent(), "Page title")
