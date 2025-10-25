@@ -11,15 +11,24 @@ import (
 )
 
 func TestPrivatePageRedirectsToLogin(t *testing.T) {
-	b := browser.New(browser.WithHandler(NewRootHandler(nil)))
+	b := browser.New(browser.WithHandler(NewRootHandler(&StubAuthenticator{
+		User: User{DisplayName: "Smithy"},
+	})))
 	win, err := b.Open("http://example.com/private")
-	assert.NoError(t, err)
-	main := shaman.WindowScope(t, win).Subscope(shaman.ByRole(ariarole.Main))
-	title := main.Get(shaman.ByH1)
-	assert.Equal(t, "Login", title.TextContent(), "Page title")
-	assert.Equal(t, "/login", win.Location().Pathname(), "Location pathname")
-	_, hasAlert := main.Query(shaman.ByRole(ariarole.Alert))
-	assert.False(t, hasAlert, "Login page has alert on first render")
+	if !assert.NoError(t, err) {
+		return
+	}
+
+	if !t.Run("Redirects to login page", func(t *testing.T) {
+		main := shaman.WindowScope(t, win).Subscope(shaman.ByRole(ariarole.Main))
+		title := main.Get(shaman.ByH1)
+		assert.Equal(t, "Login", title.TextContent(), "Page title")
+		assert.Equal(t, "/login", win.Location().Pathname(), "Location pathname")
+		_, hasAlert := main.Query(shaman.ByRole(ariarole.Alert))
+		assert.False(t, hasAlert, "Login page has alert on first render")
+	}) {
+		return
+	}
 }
 
 func TestLoginWithInvalidCredentials(t *testing.T) {
