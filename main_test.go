@@ -73,4 +73,11 @@ func TestLoginWithValidCredentials(t *testing.T) {
 	}) {
 		return
 	}
+
+	t.Run("Allow accessing private resource", func(t *testing.T) {
+		win.Navigate("/private")
+		title := shaman.WindowScope(t, win).Get(shaman.ByH1)
+		assert.Equal(t, "Private Page", title.TextContent())
+		assert.Equal(t, "/private", win.Location().Pathname())
+	})
 }
