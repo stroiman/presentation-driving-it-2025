@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/base64"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"html/template"
@@ -52,8 +54,31 @@ func (h *RootHttpHandler) GetIndex(w http.ResponseWriter, r *http.Request) {
 	renderTemplate("index.tmpl", w, nil)
 }
 
+func loggedIn(r *http.Request) (User, bool) {
+	var user User
+	authCookie, err := r.Cookie("auth")
+	if authCookie == nil {
+		if err != nil {
+			slog.Error("Error reading cookie", "err", err)
+		}
+		return user, false
+	}
+	decoded, err := base64.StdEncoding.DecodeString(authCookie.Value)
+	if err != nil {
+		slog.Error("Error decoding base64 data")
+		return user, false
+	}
+	err = json.Unmarshal(decoded, &user)
+	ok := err == nil
+	if !ok {
+		slog.Error("Error reading cookie", "err", err)
+	}
+	return user, ok
+}
+
 func (h *RootHttpHandler) GetPrivate(w http.ResponseWriter, r *http.Request) {
-	if h.loggedIn {
+	_, ok := loggedIn(r)
+	if ok {
 		renderTemplate("private.tmpl", w, nil)
 	} else {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
@@ -65,11 +90,21 @@ func (h *RootHttpHandler) GetLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *RootHttpHandler) PostLogin(w http.ResponseWriter, r *http.Request) {
-	_, err := h.Authenticator.Authenticate(
+	user, err := h.Authenticator.Authenticate(
 		getFormValue(r, "username"),
 		getFormValue(r, "password"))
 	if err == nil {
 		h.loggedIn = true
+		cookie, err := json.Marshal(user)
+		if err != nil {
+			renderErrPage(w)
+			return
+		}
+		http.SetCookie(w,
+			&http.Cookie{
+				Name:  "auth",
+				Value: base64.StdEncoding.EncodeToString(cookie),
+			})
 		w.Header().Add("HX-Replace-Url", "/")
 		w.Header().Add("HX-Retarget", "body")
 		renderTemplate("index.tmpl", w, nil)
