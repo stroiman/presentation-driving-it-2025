@@ -35,6 +35,7 @@ func TestPrivatePageRedirectsToLogin(t *testing.T) {
 	}
 
 	t.Run("Return to private page after login", func(t *testing.T) {
+		pushTB(t)
 		form := shaman.WindowScope(t, win).
 			Subscope(shaman.ByRole(ariarole.Main)).
 			Subscope(shaman.ByRole(ariarole.Form))
