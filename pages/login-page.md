@@ -179,3 +179,6 @@ func TestLoginPageAuthError(t *testing.T) {
 ```
 ````
 
+<v-click at="2">
+This `eventTarget` knows nothing about being embedded in a `node`.
+</v-click>

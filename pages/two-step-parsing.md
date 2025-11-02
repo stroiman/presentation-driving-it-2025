@@ -87,3 +87,7 @@ object DocumentFragment
 HTMLTemplateElement -- "content" DocumentFragment
 ```
 </v-drag>
+
+---
+src: ./building-object-oriented-model.md
+---
