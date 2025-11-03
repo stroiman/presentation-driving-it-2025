@@ -66,6 +66,10 @@ src: ./pages/htmx.md
 ---
 
 ---
+src: ./pages/example.md
+---
+
+---
 src: ./pages/building.md
 ---
 

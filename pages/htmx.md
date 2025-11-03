@@ -1,4 +1,14 @@
 ---
+layout: section
+color: slate
+---
+
+# Hypermedia
+
+An architecture for building web applications providing almost the same level of
+interactivity as SPA, but with the simplicity of SSR.
+
+---
 layout: top-title
 color: slate
 ---
@@ -32,7 +42,7 @@ color: slate
 
 :: title ::
 
-## HTMX Example - Login Page
+# HTMX Example - Login Page
 
 :: content ::
 
@@ -70,7 +80,7 @@ color: slate
 
 :: title ::
 
-## HTMX Example - The request
+# HTMX Example - The request
 
 :: content ::
 
@@ -100,7 +110,7 @@ color: slate
 
 :: title ::
 
-## HTMX Example - The Response - failed login
+# HTMX Example - The Response - failed login
 
 :: content ::
 
@@ -129,6 +139,8 @@ Content-Type: text/plain; charset=utf-8
 </p>
 ```
 
+Remember the attribute `hx-swap="innerHTML"`?
+
 ---
 layout: top-title
 color: slate
@@ -136,11 +148,11 @@ color: slate
 
 :: title ::
 
-## HTMX Example - The Response - successful login
+# HTMX Example - The Response - successful login
 
 :: content ::
 
-```http {*|18-20}{lines:true}
+```http {*|4|5}{lines:true}
 HTTP/1.1 200 OK
 Cache-Control: no-cache
 Content-Type: text/plain; charset=utf-8
@@ -153,3 +165,11 @@ Hx-Retarget: body
     <p>Welcome, Logged In User, ...</p>
 </body></htmx>
 ```
+
+<v-clicks at="1">
+
+- `Hx-PushUrl` creates integrates with the History API.
+- `Hx-Retarget` overrides the swap target with a CSS selector, i.e., swapping
+  the `<body>` element
+
+</v-clicks>
