@@ -6,7 +6,7 @@ color: slate
 # Hypermedia
 
 An architecture for building web applications providing almost the same level of
-interactivity as SPA, but with the simplicity of SSR.
+interactivity as SPAs, but with the simplicity of SSR.
 
 ---
 layout: top-title

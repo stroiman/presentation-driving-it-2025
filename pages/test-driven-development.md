@@ -42,7 +42,7 @@ align: l
 
 Works well when a small piece of code can provide **_fast and relevant_** feedback.
 
-## Not so good for
+## Less useful scenarios
 
 - UI work
   - Relevant feedback is visual inspecting, does it _look right_.

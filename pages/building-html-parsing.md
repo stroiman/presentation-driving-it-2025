@@ -4,14 +4,18 @@ color: slate
 ---
 
 <StickyNote title="Performance" v-drag="[129,260,180,180,8]">
-    The two-step parsing does add some overhead compared to a dedicated parser.
-    I prioritised progress.
+
+The two-step parsing does add some overhead compared to a dedicated parser.
+I prioritised progress.
+
 </StickyNote>
 
 <StickyNote title="Compatibility" v-drag="[316,233,210,180,-7]">
-    Not all browser behaviour would work, e.g. `document.write()`. It's not a
-    priority to support all features; Focus is to support building <em>modern</em> web
-    applications.
+
+Not all browser behaviour would work, e.g. `document.write()`. It's not a
+priority to support all features; Focus is to support building <em>modern</em> web
+applications.
+
 </StickyNote>
 
 :: title ::
@@ -21,13 +25,11 @@ color: slate
 :: content ::
 
 - Package `golang.org/x/net/html` provides an HTML-5 compliant parser
-- But I need to build my own data structure.
+- 
 
 ---
 src: ./two-step-parsing.md
 ---
-
-foo
 
 ---
 layout: top-title

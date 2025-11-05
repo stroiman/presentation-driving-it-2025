@@ -1,42 +1,85 @@
 ---
-layout: top-title-two-cols
+layout: top-title
 color: slate
 ---
 
 :: title ::
 
-## Two-Step Parsing ##
+# Two-Step Parsing ##
 
-:: left ::
+:: content ::
 
-## The HTML
 
-<v-drag pos="62,126,334,86">
+<v-drag pos="24,82,334,86">
+
+### The HTML
+
 ```html
-<!doctype html><html><head>...</head><body>
-...
+<!doctype html><html><head><template>
+    <div></div>
+    <div></div>
+    <div></div>
+</template>
+</head><body>
+<h1>Heading</h1>
+<p>Body</p>
 </body></html>
 ```
+
 </v-drag>
 
-<ArrowDraw color="red" v-drag="[115,207,95,52,47]" />
+<ArrowDraw color="red" v-drag="[534,364,95,52,150]" />
 
-<v-drag pos="96,162,270,346">
+<v-drag pos="553,67,424,307">
+
+### `x/net/html` Representation
+
 ```plantuml
 @startuml
 
 skinparam backgroundColor transparent
 
-object html
-object head
-object body
-object h1
-object p
-object template
-object "div" as d1
-object "div" as d2
-object "div" as d3
+object "Node" as doc {
+    Type: DocumentNode
+}
+object "Node" as html {
+    Type: ElementNode
+    Data: "HTML"
+}
+object "Node" as head {
+    Type: ElementNode
+    Data: "HEAD"
+}
+object "Node" as body {
+    Type: ElementNode
+    Data: "BODY"
+}
+object "Node" as h1 {
+    Type: ElementNode
+    Data: "H1"
+}
+object "Node" as p {
+    Type: ElementNode
+    Data: "P"
+}
+object template as "Template" {
+    Type: ElementNode
+    Data: "TEMPLATE"
+}
+object "Node" as d1 {
+    Type: ElementNode
+    Data: "DIV"
+}
+object "div" as d2 {
+    Type: ElementNode
+    Data: "DIV"
+}
+object "div" as d3 {
+    Type: ElementNode
+    Data: "DIV"
+}
 
+doc o- html
 html o-- head
 html o-- body
 head o-- template
@@ -47,47 +90,46 @@ body -- h1
 body -- p
 @enduml
 ```
+
 </v-drag>
 
-:: right ::
 
-## The DOM
+<v-drag pos="200,204,404,328">
 
-<v-drag pos="434,142,222,249">
+## DOM
+
 ```plantuml
 @startuml
 
 skinparam backgroundColor transparent
 
-object html
-object head
-object body
-object h1
-object p
-object template
-
-html o-- head
-html o-- body
-head o-- template
-body -- h1
-body -- p
-@enduml
-```
-</v-drag>
-
-<v-drag pos="698,320,198,153">
-```plantuml
-@startuml
-
-skinparam backgroundColor transparent
-
+object HTMLDocument
+object HTMLHtmlElement
+object HTMLHeadElement
+object HTMLBodyElement
+object "HTMLHeadingElement" as h1 {
+    tagName: "H1"
+}
+object "HTMLParagraphElement" as p
 object HTMLTemplateElement
 object DocumentFragment
+object "HTMLDivElement" as d1
+object "HTMLDivElement" as d2
+object "HTMLDivElement" as d3
 
-HTMLTemplateElement -- "content" DocumentFragment
+HTMLDocument o- HTMLHtmlElement
+HTMLHtmlElement o-- HTMLHeadElement
+HTMLHtmlElement o-- HTMLBodyElement
+HTMLHeadElement o--- HTMLTemplateElement
+HTMLBodyElement -- h1
+HTMLBodyElement -- p
+
+p --[hidden]> DocumentFragment
+HTMLTemplateElement ----r--> "content" DocumentFragment
+DocumentFragment o-- d1
+DocumentFragment o-- d2
+DocumentFragment o-- d3
+@enduml
 ```
-</v-drag>
 
----
-src: ./building-object-oriented-model.md
----
+</v-drag>

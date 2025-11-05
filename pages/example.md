@@ -10,6 +10,11 @@ layout: top-title
 color: slate
 ---
 
+<AdmonitionType type="warning" title="Beware" v-drag="[544,332,304,95]">
+This is not a guide to implementing session-based authentication. Many security
+concerns are not covered here.
+</AdmonitionType>
+
 :: title ::
 
 # Example
@@ -152,6 +157,7 @@ func (h *RootHttpHandler) GetPrivate(w http.ResponseWriter, r *http.Request) {
 ````
 
 <v-click hide at="1">
+
 ```
 --- FAIL: TestPrivatePageRedirectsToLogin (0.02s)
     main_test.go:19:
@@ -159,9 +165,10 @@ func (h *RootHttpHandler) GetPrivate(w http.ResponseWriter, r *http.Request) {
                                 expected: "Login"
                                 actual  : "Private Page"
                 Test:           TestPrivatePageRedirectsToLogin
-                Messages:       Page title</code></pre>
+                Messages:       Page title
 
 ```
+
 </v-click>
 
 ---
@@ -200,13 +207,14 @@ columns: is-6-6
 <v-switch>
     <template #0><h1>Login With Invalid Credentials: Fail</h1></template>
     <template #1><h1>Login With Invalid Credentials: Pass</h1></template>
+    <template #2><h1>Login With Invalid Credentials: Pass</h1></template>
 </v-switch>
 
 :: left ::
 
 ## Test
 
-```go {*|12-23|18-13}{at: 0,maxHeight:'23rem'}
+```go {all|12-23|27-39}{at: 0,maxHeight:'23rem'}
 func TestLoginWithInvalidCredentials(t *testing.T) {
 	auth := &StubAuthenticator{
 		Error: ErrInvalidCredentials,
@@ -254,7 +262,7 @@ func TestLoginWithInvalidCredentials(t *testing.T) {
 
 ## Handler
 
-````md magic-move {at:0}
+````md magic-move {at:0,maxHeight:'10px'}
 ```go
 func NewRootHandler(
     authenticator Authenticator,
@@ -287,7 +295,7 @@ func (h *RootHttpHandler) PostLogin(
 
 ## Template
 
-````md magic-move {at:0,maxHeight:'10rem'}
+````md magic-move {at:0}
 ```html
   <div class="form-field-list">
     ...
