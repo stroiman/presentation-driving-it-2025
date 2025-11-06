@@ -2,6 +2,14 @@
 
 This is part of the presentation for Driving IT 2025
 
+This repository contains TWO branches.
+
+- `main` contains the presentation.
+- `example` contains an example project using Gost-DOM.
+
+The two branches have two completely separate histories, with exception of the
+readme file.
+
 ## The example
 
 This example starts with a simple web application with three pages
