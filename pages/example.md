@@ -57,7 +57,7 @@ tooling to help build the dependency graph at startup.
 
 :: title ::
 
-Root HTTP handler
+# Root HTTP handler
 
 :: content ::
 
@@ -81,6 +81,10 @@ func NewRootHandler(authenticator Authenticator) *RootHttpHandler {
     return &handler
 }
 ```
+
+---
+src: ./login-page.md
+---
 
 ---
 layout: top-title-two-cols

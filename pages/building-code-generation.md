@@ -1,4 +1,66 @@
 ---
+layout: section
+color: slate
+---
+
+# Code Generation
+
+Auto-generate trivial code, and ensure conformance to specs.
+
+---
+layout: top-title
+color: slate
+---
+
+:: title ::
+
+# Code Generation - Web APIs
+
+:: content ::
+
+All operations and attributes are defined in web IDL specifications.
+
+<div class="grid w-full h-fit grid-cols-2 grid-rows-1 mt-10 mb-auto gap-4">
+<div class="grid-item grid-col-span-1">
+
+```
+interface HTMLAnchorElement : HTMLElement {
+  [HTMLConstructor] constructor();
+
+  [CEReactions, Reflect] attribute DOMString target;
+  [CEReactions, Reflect] attribute DOMString download;
+  [CEReactions, Reflect] attribute USVString ping;
+  [CEReactions, Reflect] attribute DOMString rel;
+  // ...
+
+  // also has obsolete members
+};
+HTMLAnchorElement includes HTMLHyperlinkElementUtils;
+```
+
+</div>
+<div class="grid-item grid-col-span-1">
+
+
+```
+interface mixin HTMLHyperlinkElementUtils {
+  [CEReactions, ReflectSetter] stringifier 
+      attribute USVString href;
+  readonly attribute USVString origin;
+  [CEReactions] attribute USVString protocol;
+  [CEReactions] attribute USVString username;
+  [CEReactions] attribute USVString password;
+  [CEReactions] attribute USVString host;
+  // ...
+};
+```
+
+</div>
+</div>
+
+
+
+---
 layout: top-title-two-cols
 color: slate
 ---
@@ -143,6 +205,9 @@ func Click(e dom.Element) bool {
 }
 ```
 
+ - `focus`/`blur` events bubble, `focusin`/`focusout` do not.
+ - `click` events are cancelable, focus events do not.
+
 ---
 layout: top-title
 color: slate
@@ -207,14 +272,53 @@ color: slate
 
 :: title ::
 
+# Code Generation - DOM interfaces
+
+:: content ::
+
+Ensure the implementation of behaviour conforms to specifications.
+
+```go
+// This file is generated. Do not edit.
+
+package dom
+
+type ParentNode interface {
+	Children() HTMLCollection
+	FirstElementChild() Element
+	LastElementChild() Element
+	ChildElementCount() int
+	Prepend(...Node) error
+	Append(...Node) error
+	ReplaceChildren(...Node) error
+	QuerySelector(string) (Element, error)
+	QuerySelectorAll(string) (NodeList, error)
+}
+```
+
+Not used a lot, as this type of code gen was added later.
+
+---
+layout: top-title
+color: slate
+---
+
+:: title ::
+
 # Code Generation - Limitations
 
 :: content ::
 
-Web IDL doesn't provide all necessary
+Web IDL doesn't provide all information
+
+<div class="ns-c-tight">
 
 - If an operation can throw an `Error`
-- Default values
+- Default value for optional arguments
+
+</div>
+
+Web IDL provides defaults, which can be adjusted
 
 ```go
 var htmlRules = SpecRules{
@@ -236,21 +340,21 @@ var htmlRules = SpecRules{
 
 <ArrowDraw v-drag="[371,107,140,52,172]" />
 
-<ArrowDraw v-drag="[347,425,140,52,196]" />
+<ArrowDraw v-drag="[409,423,140,52,196]" />
 
-<ArrowDraw v-drag="[299,337,140,40,156]" />
+<ArrowDraw v-drag="[301,359,140,40,156]" />
 
 <StickyNote v-drag="[511,72,186,59]">
     Requested by the Rust community as well.
 </StickyNote>
 
-<StickyNote v-drag="[428,253,178,85]">
+<StickyNote v-drag="[429,273,178,85]">
     I decided to not have an unused argument in the Go implementation.
 </StickyNote>
 
-<StickyNote v-drag="[493,426,199,96]">
+<StickyNote v-drag="[555,413,266,96]">
 
-Value is _optional_ in JS. Use `""` in Go if no value was provided. (Otherwise,
-an error would be generated)
+Go doesn't have optional values. A strategy must be chosed for when no value is
+provided by JS code.. Here, the _zero value_, i.e. `""` will be used.
 
 </StickyNote>

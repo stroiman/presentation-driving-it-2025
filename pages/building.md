@@ -1,28 +1,22 @@
 ---
-layout: top-title
+layout: section
 color: slate
 ---
 
-:: title ::
-
 # Building
 
-:: content ::
+DOM, HTML DOM, Parsing, Script Engines, ...
 
-- HTML Parsing
-- An Object-Oriented API
-- Code Generation
-- Integrating V8 ?
-- Garbage Collection ?
-- Learnings ?
-- Mistakes ?
+---
+src: ./building-object-oriented-model.md
+---
 
 ---
 src: ./building-html-parsing.md
 ---
 
 ---
-src: ./building-object-oriented-model.md
+src: ./building-script-engines.md
 ---
 
 ---

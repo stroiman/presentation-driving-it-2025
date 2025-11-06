@@ -65,16 +65,33 @@ color: slate
 
 :: title ::
 
-Playwright 
+# Playwright :(
 
 :: content ::
 
+- Better than Selenium/WebDriver, but still browser automation, with all the
+  flaws:
 
+<div flex v-click>
+<div i-carbon:debug mr-1/>
+<div text-xs opacity-70>Slow</div>
+</div>
+<div flex v-click>
+<div i-carbon:debug mr-1/>
+<div text-xs opacity-70>Erratic</div>
+</div>
+<div flex v-click>
+<div i-carbon:debug mr-1/>
+<div text-xs opacity-70>Fragile</div>
+</div>
 
----
-layout: top-title
-color: slate
----
+<v-clicks>
+
+- Written **after** the code
+- They did not provide a feedback loop to help implement functionality
+
+</v-clicks>
+
 
 ---
 src: ./pages/test-driven-development.md
@@ -82,6 +99,10 @@ src: ./pages/test-driven-development.md
 
 ---
 src: ./pages/htmx.md
+---
+
+---
+src: ./pages/htmxtdd.md
 ---
 
 ---

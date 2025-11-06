@@ -62,7 +62,7 @@ object "Node" as p {
     Type: ElementNode
     Data: "P"
 }
-object template as "Template" {
+object "Node" as template {
     Type: ElementNode
     Data: "TEMPLATE"
 }
@@ -70,11 +70,11 @@ object "Node" as d1 {
     Type: ElementNode
     Data: "DIV"
 }
-object "div" as d2 {
+object "Node" as d2 {
     Type: ElementNode
     Data: "DIV"
 }
-object "div" as d3 {
+object "Node" as d3 {
     Type: ElementNode
     Data: "DIV"
 }
@@ -88,15 +88,24 @@ template o-- d2
 template o-- d3
 body -- h1
 body -- p
+
 @enduml
 ```
 
+
 </v-drag>
 
-
-<v-drag pos="200,204,404,328">
+<v-drag pos="339,165,72,44">
 
 ## DOM
+
+</v-drag>
+
+<v-drag pos="65,212,497,328">
+
+
+<!-- note "HTMLTemplateElement" doesn't have any children" as n -->
+<!-- HTMLTemplateElement .. n -->
 
 ```plantuml
 @startuml
@@ -105,8 +114,8 @@ skinparam backgroundColor transparent
 
 object HTMLDocument
 object HTMLHtmlElement
-object HTMLHeadElement
 object HTMLBodyElement
+object HTMLHeadElement
 object "HTMLHeadingElement" as h1 {
     tagName: "H1"
 }
@@ -120,15 +129,22 @@ object "HTMLDivElement" as d3
 HTMLDocument o- HTMLHtmlElement
 HTMLHtmlElement o-- HTMLHeadElement
 HTMLHtmlElement o-- HTMLBodyElement
+HTMLBodyElement -[hidden]> HTMLHeadElement
 HTMLHeadElement o--- HTMLTemplateElement
 HTMLBodyElement -- h1
 HTMLBodyElement -- p
 
-p --[hidden]> DocumentFragment
-HTMLTemplateElement ----r--> "content" DocumentFragment
+h1 --[hidden]> DocumentFragment
+HTMLTemplateElement ----l--> "content" DocumentFragment
 DocumentFragment o-- d1
 DocumentFragment o-- d2
 DocumentFragment o-- d3
+
+note bottom of HTMLTemplateElement
+    HTMLTemplateElement 
+    doesn't have children.
+end note
+
 @enduml
 ```
 

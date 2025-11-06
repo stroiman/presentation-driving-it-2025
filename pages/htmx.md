@@ -156,7 +156,7 @@ color: slate
 HTTP/1.1 200 OK
 Cache-Control: no-cache
 Content-Type: text/plain; charset=utf-8
-Hx-PushUrl: /private
+Hx-Replace-Url: /private
 Hx-Retarget: body
 ... more headers
 
@@ -168,8 +168,7 @@ Hx-Retarget: body
 
 <v-clicks at="1">
 
-- `Hx-PushUrl` creates integrates with the History API.
-- `Hx-Retarget` overrides the swap target with a CSS selector, i.e., swapping
-  the `<body>` element
+- `Hx-Replace-Url` change the entry in the History API..
+- `Hx-Retarget` a CSS selector to override the swap target, i.e., swapping the `<body>` element
 
 </v-clicks>

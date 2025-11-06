@@ -41,16 +41,20 @@ EU VAT invoices can be provided
 
 :: title ::
 
-# How to Contribute
+# Want to Contribute?
 
 :: content ::
 
+<v-clicks>
+
 - Help build new features
+- Support for non-core web APIs
 - Feedback
 - Create examples
 - Spread the word
-- Support for non-core web APIs
 - Building a web site
+
+</v-clicks>
 
 ---
 layout: top-title

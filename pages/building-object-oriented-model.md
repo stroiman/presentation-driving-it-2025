@@ -1,6 +1,7 @@
 ---
 layout: top-title-two-cols
 color: slate
+columns: is-5
 ---
 
 :: title ::
@@ -15,6 +16,8 @@ color: slate
 - _Method overloading_ is not supported.
 
 :: right ::
+
+<v-drag pos="395,85,582,433">
 
 ```plantuml
 @startuml
@@ -104,6 +107,7 @@ HTMLTemplateElement . n4
 @enduml
 ```
 
+</v-drag>
 
 ---
 layout: top-title
