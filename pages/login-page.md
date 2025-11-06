@@ -1,78 +1,78 @@
-# Verify 
-
-A simple interface for credentials validation
-
-```go
-type AuthenticatedUserID string
-
-type CredentialsValidator interface {
-    Validate(email string, password string) (AuthenticatedUserID, error)
-}
-
-type Server struct {
-    http.ServeMux
-    CredentialsValidator CredentialsValidator
-}
-
-func (s *Server) HandlePostLogin(r *http.Request, w http.ResponseWriter) {
-}
-
-func NewServer() *Server {
-    
-}
-```
-
----
-
-```go
-type StubbedCredentialsResponse struct {
-    User AuthenticatedUser
-    Err error
-}
-
-func (r StubbedCredentialsResponse) Validate(string,string) (AuthenticatedUser,
-error) {
-    return User, Err
-}
-```
-
----
-
-# Test
-
-```go {*}{maxHeight:'200px'}
-func TestLoginPageAuthError(t *testing.T) {
-    server := Server{
-        Authenticator: StubbedCredentialsResponse{
-            Err: errors.New("Stubbed error")
-        },
-    }
-    // Host is ignored, but necessary for cookies to work
-    b := browser.New(
-        browser.WithServer(server),
-    )
-    win, err := b.Open("https://example.com/auth/login")
-    assert.NoError(t, err)
-
-    doc := win.Document()
-    email, err := doc.QuerySelector("input[name='email']")
-    assert.NoError(t, err)
-    pass, err := doc.QuerySelector("input[name='password']")
-    assert.NoError(t, err)
-    submit, err := doc.QuerySelector("input[type='submit']")
-    assert.NoError(t, err)
-
-    ctrl := KeyboardController{win}
-    email.Focus()
-    ctrl.SendKeys("user@example.com")
-    pass.Focus()
-    ctrl.SendKeys("veryS3cre7")
-    submit.Click()
-
-    assert.Equal("/auth/login", doc.Location().PathName())
-}
-```
-
+<!-- # Verify  -->
+<!---->
+<!-- A simple interface for credentials validation -->
+<!---->
+<!-- ```go -->
+<!-- type AuthenticatedUserID string -->
+<!---->
+<!-- type CredentialsValidator interface { -->
+<!--     Validate(email string, password string) (AuthenticatedUserID, error) -->
+<!-- } -->
+<!---->
+<!-- type Server struct { -->
+<!--     http.ServeMux -->
+<!--     CredentialsValidator CredentialsValidator -->
+<!-- } -->
+<!---->
+<!-- func (s *Server) HandlePostLogin(r *http.Request, w http.ResponseWriter) { -->
+<!-- } -->
+<!---->
+<!-- func NewServer() *Server { -->
+<!--      -->
+<!-- } -->
+<!-- ``` -->
+<!---->
+<!-- --- -->
+<!---->
+<!-- ```go -->
+<!-- type StubbedCredentialsResponse struct { -->
+<!--     User AuthenticatedUser -->
+<!--     Err error -->
+<!-- } -->
+<!---->
+<!-- func (r StubbedCredentialsResponse) Validate(string,string) (AuthenticatedUser, -->
+<!-- error) { -->
+<!--     return User, Err -->
+<!-- } -->
+<!-- ``` -->
+<!---->
+<!-- --- -->
+<!---->
+<!-- # Test -->
+<!---->
+<!-- ```go {*}{maxHeight:'200px'} -->
+<!-- func TestLoginPageAuthError(t *testing.T) { -->
+<!--     server := Server{ -->
+<!--         Authenticator: StubbedCredentialsResponse{ -->
+<!--             Err: errors.New("Stubbed error") -->
+<!--         }, -->
+<!--     } -->
+<!--     // Host is ignored, but necessary for cookies to work -->
+<!--     b := browser.New( -->
+<!--         browser.WithServer(server), -->
+<!--     ) -->
+<!--     win, err := b.Open("https://example.com/auth/login") -->
+<!--     assert.NoError(t, err) -->
+<!---->
+<!--     doc := win.Document() -->
+<!--     email, err := doc.QuerySelector("input[name='email']") -->
+<!--     assert.NoError(t, err) -->
+<!--     pass, err := doc.QuerySelector("input[name='password']") -->
+<!--     assert.NoError(t, err) -->
+<!--     submit, err := doc.QuerySelector("input[type='submit']") -->
+<!--     assert.NoError(t, err) -->
+<!---->
+<!--     ctrl := KeyboardController{win} -->
+<!--     email.Focus() -->
+<!--     ctrl.SendKeys("user@example.com") -->
+<!--     pass.Focus() -->
+<!--     ctrl.SendKeys("veryS3cre7") -->
+<!--     submit.Click() -->
+<!---->
+<!--     assert.Equal("/auth/login", doc.Location().PathName()) -->
+<!-- } -->
+<!-- ``` -->
+<!---->
 ---
 layout: side-title
 titlewidth: is-3

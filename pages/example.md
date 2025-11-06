@@ -3,29 +3,34 @@ layout: section
 color: slate
 ---
 
-# Example - Login flow
+# Example - Session-based Authentication
 
 ---
 layout: top-title
 color: slate
 ---
 
-<AdmonitionType type="warning" title="Beware" v-drag="[544,332,304,95]">
+<AdmonitionType type="warning" title="Beware" v-drag="[543,327,337,133,-13]">
 This is not a guide to implementing session-based authentication. Many security
 concerns are not covered here.
+
+This was chosen as an example many web developers should be familiar with.
 </AdmonitionType>
 
 :: title ::
 
-# Example
+# Example - Desired Behaviour
 
 :: content ::
 
-Login is a good candidate.
+Implementing username/password login flow
 
-- Form with validation and error messages
-- Enough complexity to demonstrate value of fast feedback
-- A scenario most web developers should be familiar with
+## Behaviour in the UI layer
+
+- Requesting a private page redirects to login if unauthenticated
+- Submitting invalid displays an error message
+- Submitting valid credentials redirects to the previous page.
+  - Redirect to index page, if login opened directly.
 
 ---
 layout: top-title
@@ -83,7 +88,7 @@ func NewRootHandler(authenticator Authenticator) *RootHttpHandler {
 ```
 
 ---
-src: ./login-page.md
+src: ./example-login-page.md
 ---
 
 ---
@@ -119,9 +124,6 @@ func TestPrivatePageRedirectsToLogin(t *testing.T) {
 }
 ```
 
-The **Shaman** library allows selecting elements based on their accessibility
-attributes, coupling test code to their semantic meaning; facilitating
-refactoring, while enforcing adherance to accessibility standards.
 
 :: right ::
 

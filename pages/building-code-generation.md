@@ -58,7 +58,12 @@ interface mixin HTMLHyperlinkElementUtils {
 </div>
 </div>
 
+[github.com/w3c/webref] provides a curated collection of web IDL and other
+relevant specifications in JSON format.
 
+The previous JavaScript method bindings were generated from web IDL specs.
+
+[github.com/w3c/webref]: https://github.com/w3c/webref
 
 ---
 layout: top-title-two-cols

@@ -103,12 +103,23 @@ color: slate
 - Basic HTMX functionality works
 - DataStar support in progress
 - Embeds a V8 for JavaScript support
+- Typical test execution time ~ 10-30 milliseconds.
 
 Shortcuts taken
 
 - Use polyfills whenever possible; optimize later.
 - XPath implementation is based on jsdom
+- Text Encoder/Decoder based on FastestSmallestTextEncoderDecoder
+- Use existing Go CSS selector library
 
 Bonus: Consume the `http.Handler` directly to bypass the TCP stack.
 
 </v-clicks>
+
+<StickyNote class="ns-c-tight" title="Optimazation possible" v-drag="[501,162,240,133,-14]">
+
+- caching pre-compiled scripts.
+- Parser performs unnecessary steps.
+- Write native CSS selector.
+
+</StickyNote>
