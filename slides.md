@@ -113,9 +113,9 @@ src: ./pages/example.md
 src: ./pages/building.md
 ---
 
----
-src: ./pages/features.md
----
+<!-- --- -->
+<!-- src: ./pages/features.md -->
+<!-- --- -->
 
 ---
 src: ./pages/outtro.md

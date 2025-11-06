@@ -65,118 +65,6 @@ The previous JavaScript method bindings were generated from web IDL specs.
 
 [github.com/w3c/webref]: https://github.com/w3c/webref
 
----
-layout: top-title-two-cols
-color: slate
----
-
-:: title ::
-
-# Code Generation
-
-:: left ::
-
-Generate code based on web IDL and other specs to avoid writing trivial code,
-and ensure conformance to specs.
-
-- JavaScript bindings
-- UI Events
-- Mapping element tag names to IDL interfaces.
-- Generating Go interfaces
-
-[github.com/w3c/webref] provides a curated collection of web IDL and other
-relevant specifications in JSON format.
-
-<div v-drag="[507,80,447,420]">
-
-``` {*|15-16}{lines:true}
-interface HTMLAnchorElement : HTMLElement {
-  [HTMLConstructor] constructor();
-
-  [CEReactions, Reflect] attribute DOMString target;
-  [CEReactions, Reflect] attribute DOMString download;
-  [CEReactions, Reflect] attribute USVString ping;
-  [CEReactions, Reflect] attribute DOMString rel;
-  // ...
-
-  // also has obsolete members
-};
-HTMLAnchorElement includes HTMLHyperlinkElementUtils;
-
-interface mixin HTMLHyperlinkElementUtils {
-  [CEReactions, ReflectSetter] stringifier 
-      attribute USVString href;
-  readonly attribute USVString origin;
-  [CEReactions] attribute USVString protocol;
-  [CEReactions] attribute USVString username;
-  [CEReactions] attribute USVString password;
-  [CEReactions] attribute USVString host;
-  // ...
-};
-```
-
-</div>
-
-[github.com/w3c/webref]: https://github.com/w3c/webref
-
----
-layout: top-title
-color: slate
----
-
-:: title ::
-
-# Code Generation - JavaScript Bindings
-
-:: content ::
-
-<StickyNote v-drag="[606,372,270,145]" v-click="3">
-
-Plenty of trivial, repetitive code
-- encoding, decoding and validating JS values.
-- a wrapper function for each DOM function
-
-</StickyNote>
-
-```go {*|10-13|16-24|26-36}{maxHeight: '26rem',lines:true}
-func NewHTMLHyperlinkElementUtils[T any](scriptHost js.ScriptEngine[T]) *HTMLHyperlinkElementUtils[T] {
-	return &HTMLHyperlinkElementUtils[T]{}
-}
-
-func (wrapper HTMLHyperlinkElementUtils[T]) Initialize(jsClass js.Class[T]) {
-	wrapper.installPrototype(jsClass)
-}
-
-func (w HTMLHyperlinkElementUtils[T]) installPrototype(jsClass js.Class[T]) {
-	jsClass.CreatePrototypeAttribute("href", w.href, w.setHref)
-	jsClass.CreatePrototypeMethod("toString", w.href)
-	jsClass.CreatePrototypeAttribute("origin", w.origin, nil)
-    // ...
-}
-
-func (w HTMLHyperlinkElementUtils[T]) href(cbCtx js.CallbackContext[T]) (js.Value[T], error) {
-	cbCtx.Logger().Debug("JS Function call: HTMLHyperlinkElementUtils.href")
-	instance, err := js.As[html.HTMLHyperlinkElementUtils](cbCtx.Instance())
-	if err != nil {
-		return nil, err
-	}
-	result := instance.Href()
-	return codec.EncodeString(cbCtx, result)
-}
-
-func (w HTMLHyperlinkElementUtils[T]) setHref(cbCtx js.CallbackContext[T]) (js.Value[T], error) {
-	cbCtx.Logger().Debug("JS Function call: HTMLHyperlinkElementUtils.setHref")
-	instance, err0 := js.As[html.HTMLHyperlinkElementUtils](cbCtx.Instance())
-	val, err1 := js.ParseSetterArg(cbCtx, codec.DecodeString)
-	err := errors.Join(err0, err1)
-	if err != nil {
-		return nil, err
-	}
-	instance.SetHref(val)
-	return nil, nil
-}
-
-```
 
 <!--
 
@@ -301,7 +189,7 @@ type ParentNode interface {
 }
 ```
 
-Not used a lot, as this type of code gen was added later.
+Not used a lot; this type of code generation was added later.
 
 ---
 layout: top-title
@@ -310,16 +198,16 @@ color: slate
 
 :: title ::
 
-# Code Generation - Limitations
+# Code Generation - Customization
 
 :: content ::
 
-Web IDL doesn't provide all information
+Web IDL doesn't provide all information, e.g., 
 
 <div class="ns-c-tight">
 
 - If an operation can throw an `Error`
-- Default value for optional arguments
+- Default values for optional arguments
 
 </div>
 
