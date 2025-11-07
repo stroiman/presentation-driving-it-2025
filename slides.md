@@ -16,6 +16,7 @@ Or: How I Learned To Stop Worrying And Love HTML
 
 by **Peter Strøiman**
 
+
 ::note::
 
 
@@ -35,10 +36,23 @@ color: slate
 
 ::content::
 
-- Coding since the age of 8
-    - Professionally since 1997
+- Award Winning Photographer
+- Have been known to write code
 - Passionate about Test-Driven Development
-- Fine Arts Photographer
+
+<v-clicks>
+<v-drag pos="766,85,200,300">
+<img src="./img/Boderne Astroset Print PR Baryta_facebook.jpg" ></img>
+</v-drag>
+
+<v-drag pos="443,67,300,200">
+<img src="./img/stroiman_20210206_0706 copyv1_facebook.jpg" />
+</v-drag>
+
+<v-drag pos="334,302,400,200">
+<img src="./img/stroiman_20230911_6163_facebook.jpg" />
+</v-drag>
+</v-clicks>
 
 ---
 layout: top-title
@@ -87,8 +101,8 @@ color: slate
 
 <v-clicks>
 
-- Written **after** the code
-- They did not provide a feedback loop to help implement functionality
+- Tests are written **after** the code
+- Doesn't provide the benefit of TDD
 
 </v-clicks>
 

@@ -21,6 +21,8 @@ color: slate
   - Including back-end processes
 - You can reliably **test for the absence** of a reaction with zero waiting.
 
+But with limited scope. Basic HTMX apps work, but not much more
+
 ---
 layout: top-title
 color: slate
@@ -32,7 +34,7 @@ color: slate
 
 :: content ::
 
-A few support projects have spawned from the project
+The project has spawned a few support libraries.
 
 - [gost-dom/shaman]
 
@@ -108,6 +110,9 @@ color: slate
   - Automatic updates of v8 from chromium sources
 - Maintainers of [w3c/webref] always helpful and friendly and helpful replying to
   questions, and offering help.
+
+For the presentation
+
 - [slidev] Presentations that can be committed to git
 - [neversink]: Slidev theme
 
@@ -122,32 +127,54 @@ layout: top-title
 color: slate
 ---
 
+Presentation and example: [github.com/stroiman/presentation-driving-it-2025]
+
+[github.com/stroiman/presentation-driving-it-2025]: https://github.com/stroiman/presentation-driving-it-2025
+
 :: title ::
 
 # Want to Contribute?
 
 :: content ::
 
-<v-clicks>
 
 - Help build new features
 - Support for non-core web APIs
 - Feedback
+  - Help prioritize features
 - Create examples
 - Spread the word
 - Building a web site
 
-</v-clicks>
 
-<v-click>
-<ArrowHeads color="pink" width="300px" v-drag="[279,278,346,214]" />
-<v-drag pos="351,466,247,34">
-Donations are also welcome. 
-</v-drag>
-</v-click>
 
-<v-click>
-<StickyNote v-drag="[583,418,196,66,10]">
-EU VAT invoices can be provided
+
+<StickyNote v-drag="[310,218,229,83,10]" v-click>
+
+WASM was never a priority for me, but could be added sooner due to feedback.
+
 </StickyNote>
+  
+<StickyNote v-drag="[201,374,222,71,-12]" v-click>
+
+Poul, could you prompt something into existence?
+
+</StickyNote>
+
+
+
+<!-- <v-click> -->
+<!-- <ArrowHeads color="pink" width="300px" v-drag="[279,278,346,214]" /> -->
+<!-- <v-drag pos="351,466,247,34"> -->
+<!-- Donations are also welcome.  -->
+<!-- </v-drag> -->
+<!-- </v-click> -->
+<!---->
+<!-- <v-click> -->
+<!-- <StickyNote v-drag="[583,418,196,66,10]"> -->
+<!-- EU VAT invoices can be provided -->
+<!-- </StickyNote> -->
+
+<!--
 </v-click>
+-->

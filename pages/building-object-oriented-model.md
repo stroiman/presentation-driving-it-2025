@@ -12,8 +12,16 @@ columns: is-5
 
 - The core DOM and HTML DOM API represent a 1990s-style Object-Oriented API.
 - Go doesn't support OOP in that sense.
+- Program to interfaces
 - _Embedding_ can reuse behaviour.
-- _Method overloading_ is not supported.
+- Go does not have _virtual methods_
+
+<StickyNote v-drag="[116,374,194,87,-5]" v-click>
+
+Go has the _good parts_ of OOP, but avoids the _bad parts_.
+
+</StickyNote >
+
 
 :: right ::
 

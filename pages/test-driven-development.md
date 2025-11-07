@@ -53,11 +53,11 @@ align: l
 
 Works well when a small piece of code can provide **_fast and relevant_** feedback.
 
-## Less useful scenarios
+## Less Useful For
 
 - UI work
-  - Relevant feedback is looking at the page.
-  - Fast feed comes from Live/hot reload in browser.
+  - Fast feedback comes from browser live/hot reload
+  - The relevant feedback is, does it look right
 - And maybe (not my area of expertice)
   - AI Model Development
   - Game Development

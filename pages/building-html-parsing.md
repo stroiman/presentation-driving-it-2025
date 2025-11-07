@@ -42,8 +42,33 @@ color: slate
 
 :: title ::
 
-# Parsing `<script></script>`
+# Parsing - Script Execution
 
 :: content ::
 
-Must be executed at "the right time"
+Scripts must run when mounted in the DOM tree.
+
+```html
+<!doctype html>
+<html><body>
+    <h1>Script Page</h1>
+    <p>Visible to script</p>
+    <script>
+        console.log(document.body.outerHTML)
+    </script>
+    <p>Not visible to script></p>
+</body></html>
+```
+
+Logs:
+
+```
+<body>
+    <h1>Script Page</h1>
+    <p>Visible to script</p>
+    <script>
+      console.log(document.body.outerHTML);
+    </script></body>
+```
+
+Neither the 2nd paragraph, nor whitespace is yet in the DOM.

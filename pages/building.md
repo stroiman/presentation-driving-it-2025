@@ -3,7 +3,7 @@ layout: section
 color: slate
 ---
 
-# Building
+# Building a Browser
 
 DOM, HTML DOM, Parsing, Script Engines, ...
 

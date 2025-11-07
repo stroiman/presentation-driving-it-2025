@@ -9,6 +9,7 @@ color: slate
 
 :: content ::
 
+<ArrowDraw color="red" v-drag="[378,92,155,52]" />
 
 <v-drag pos="24,82,334,86">
 

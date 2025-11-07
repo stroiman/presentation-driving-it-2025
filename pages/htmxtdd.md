@@ -98,23 +98,19 @@ color: slate
 
 :: content ::
 
+<div class="flex">
+<img src="../img/196428063.png" />
+
+<a class="text-2xl ml-4"
+href="https://github.com/gost-dom/browser">github.com/<span class="font-bold">gost-dom</span>/browser</a>
+</div>
+
 <v-clicks>
 
 - Basic HTMX functionality works
 - DataStar support in progress
 - Embeds a V8 for JavaScript support
 - Typical test execution time ~ 10-30 milliseconds.
-
-Shortcuts taken
-
-- Use polyfills whenever possible; optimize later.
-- XPath implementation is based on jsdom
-- Text Encoder/Decoder based on FastestSmallestTextEncoderDecoder
-- Use existing Go CSS selector library
-
-Bonus: Consume the `http.Handler` directly to bypass the TCP stack.
-
-</v-clicks>
 
 <StickyNote class="ns-c-tight" title="Optimazation possible" v-drag="[501,162,240,133,-14]">
 
@@ -123,3 +119,12 @@ Bonus: Consume the `http.Handler` directly to bypass the TCP stack.
 - Write native CSS selector.
 
 </StickyNote>
+
+Shortcuts taken
+
+- Use JavaScript polyfills whenever possible; optimize later.
+- Use existing Go CSS selector library
+
+
+
+</v-clicks>

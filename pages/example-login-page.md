@@ -112,9 +112,18 @@ cookies don't work without a host.
 `WithHandler` bypass the TCP stack, connecting outgoing HTTP requests directly
 to the root `http.Handler`.
 
+
 </StickyNote>
 
+
 <div v-click="[1,2]">
+
+<ArrowDraw v-drag="[588,340,140,52,205]" />
+<StickyNote v-drag="[732,372,180,105,-7]">
+
+"Name" refers to "Accessibility Name", which is the "label" for an input.
+
+</StickyNote>
 
 <StickyNote v-drag="[40,154,180,180,6]">
 
