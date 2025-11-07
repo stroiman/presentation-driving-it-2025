@@ -122,7 +122,7 @@ Object.getPrototypeOf(element).constructor.name
 
 Based on mapping from tag name to web IDL interface.
 
-```go {*|2-3|5-7|}{lines:true}
+```go {*|2-3|5-7|9-11}{lines:true}
 var HtmlElements = map[string]string {
 	"html": "HTMLHtmlElement",
 	"head": "HTMLHeadElement",

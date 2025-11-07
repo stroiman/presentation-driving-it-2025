@@ -38,6 +38,7 @@ color: slate
 
 - Award Winning Photographer
 - Have been known to write code
+- Lover of Open Source
 - Passionate about Test-Driven Development
 
 <v-clicks>

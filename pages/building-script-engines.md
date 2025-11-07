@@ -43,7 +43,7 @@ color: slate
 
 Expose native functions to JavaScript code.
 
-- Wrapper Code decoupled to v8
+- Wrapper code decoupled from v8
   - Overly complex API
   - Support alternate script engines (e.g., pure Go)
     - An experimental solution using Goja already exists.
@@ -187,5 +187,6 @@ color: slate
 - A Go object can keep a JS object alive, and a JS object can keep a Go object
   alive.
 - Gost-DOM _will_ leak for a long-running browser context.
+- A solution _could_ be found using _weak references_.
 
 Not an issue for the intended use case.

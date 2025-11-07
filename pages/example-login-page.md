@@ -39,7 +39,7 @@ func TestLoginPageAuthError(t *testing.T) {
     ctrl.SendKeys("veryS3cre7")
     submit.Click()
 
-    assert.Equal("/auth/login", doc.Location().PathName())
+    assert.Equal("/auth/login", win.Document().Location().PathName())
 }
 ```
 
@@ -72,7 +72,7 @@ func TestLoginPageAuthError(t *testing.T) {
     pass.Write("veryS3cre7")
     submit.Click()
 
-    assert.Equal("/auth/login", doc.Location().PathName())
+    assert.Equal("/auth/login", win.Document().Location().PathName())
 }
 ```
 
@@ -92,7 +92,7 @@ func TestLoginPageAuthError(t *testing.T) {
     form.Password().Write("veryS3cre7")
     form.Submit().Click()
 
-    assert.Equal("/auth/login", doc.Location().PathName())
+    assert.Equal("/auth/login", win.Document().Location().PathName())
 }
 ```
 ````

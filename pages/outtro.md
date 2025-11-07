@@ -10,18 +10,22 @@ layout: top-title
 color: slate
 ---
 
+
+But with limited scope. Basic HTMX apps work, but not much more
+
+
 :: title ::
 
 # It really does ... (what others claim)
 
 :: content ::
 
-- Completely predictable execution
-- Auto wait for all
+- Completely predictable JavaScript execution
+- Auto wait for all tasks
   - Including back-end processes
 - You can reliably **test for the absence** of a reaction with zero waiting.
+  - Using go's `synctest` package.
 
-But with limited scope. Basic HTMX apps work, but not much more
 
 ---
 layout: top-title
@@ -48,7 +52,7 @@ The project has spawned a few support libraries.
 
 - [gost-dom/v8go]
 
-  Fork of v8go used by Gost-DOM (don't use), nesting ground for adding V8 features not yet available in v8go.
+  Fork of v8go used by Gost-DOM (don't use), nesting ground for V8 features not yet in v8go.
 
 - [gost-dom/webref]
 
@@ -87,9 +91,9 @@ color: slate
 :: content ::
 
 - [Testing Library](https://testing-library.com/)
-  - Writing tests coupled to accessibility 
-- [jscom](https://github.com/jsdom/jsdom)
-  - Proof that a usable browser-like environment is achievable
+  - Coupling UI tests to accessibility attributes; html attributes.
+- [jsdom](https://github.com/jsdom/jsdom)
+  - Proof that a usable browser-like environment is achievable.
 - Unmaintained (the original headless browsers)
   - [Zombie](https://zombie.js.org/)
   - [PhantomJS](https://phantomjs.org/)
@@ -105,8 +109,8 @@ color: slate
 
 :: content ::
 
-- [rogchap] Original author of v8go
-- [tommie] Best current fork of v8go
+- [rogchap] - Original author of v8go
+- [tommie] - Best current fork of v8go
   - Automatic updates of v8 from chromium sources
 - Maintainers of [w3c/webref] always helpful and friendly and helpful replying to
   questions, and offering help.
